@@ -18,3 +18,17 @@ Since this project is inteded as a tech demo, it implements the following featur
 
 There are two different sets of test: unit tests, and integration (end to end) tests.
 
+## Running
+
+### Without docker
+
+- Download and install the .NET SDK for your platform at https://dotnet.microsoft.com/download
+- clone the repo
+- cd into the project directory (cd BillPokemon)
+- at the prompt, write "dotnet run" and press enter
+
+### With docker
+
+TODO
+
+You can now open the browser to https://localhost:5001/swagger/index.html and use Swagger to read the API docs and/or try it out.
