@@ -14,9 +14,30 @@ Since this project is inteded as a tech demo, it implements the following featur
     - Configurable timeouts and retries
     - Mockable
 
-## Tests
 
-There are two different sets of test: unit tests, and integration (end to end) tests.
+## Design, project structure, implementation choices
+
+
+### BillPokemon.Core
+I have hidden external services behind interfaces, to make the solution more modular and testable.
+This project includes the interfaces as well as common utilities that can be shared across services implementations.
+Why just one project? For simplicity. In a more complex scenario, this project could be divided by service type (one project for each service, e.g. BillPokemon.Translation.Core) or by functionality (e.g. BillPokemon.Interfaces + BillPokemon.Common), or both.
+
+### BillPokemon.Tests
+Project for tests. This is a compromise/semplification: I could have done multiple test project (e.g. BillPokemon.Core.Tests), but in this case it would have been overengineering. I could always refactor and add other projects later if this becomes too big.
+
+The test bank includes unit tests and integration tests. Integration tests will actually ping the external server APIs for data while the unit tests run off of mocked data.
+
+### BillPokemon.PokeApiNet
+
+For the sake of the example (to show how things could be done in different ways), I decided to implement the description services using an existing library. To read Pokemon descriptions, I used the PokeApiNet library.
+This is a good candidate for the following reasons:
+- it is async (re: the non-functional requirement "async everywhere")
+- it uses HttpClient (so we can control behaviour like retries and circuit breakers centrally through IHttpClientFactory)
+
+### BillPokemon.FunTranslations
+
+Again as an example, I implemented a very basic, simple, minimal client for the translation service using HttpClient and Newtonsoft.Json, based on the docs found on the funtranslations site.
 
 ## Running
 
