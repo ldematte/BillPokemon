@@ -39,9 +39,9 @@ namespace BillPokemon.FunTranslations
 
         private readonly HttpClient m_httpClient;
 
-        public ShakespeareFunTranslationService()
+        public ShakespeareFunTranslationService(HttpClient httpClient)
         {
-            m_httpClient = new HttpClient();
+            m_httpClient = httpClient;
         }
 
         public async Task<string> GetTranslation(string text)

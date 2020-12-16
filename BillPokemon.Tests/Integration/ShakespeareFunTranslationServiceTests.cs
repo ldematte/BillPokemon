@@ -1,4 +1,5 @@
-﻿using BillPokemon.FunTranslations;
+﻿using System.Net.Http;
+using BillPokemon.FunTranslations;
 using NUnit.Framework;
 
 namespace BillPokemon.Tests.Integration
@@ -10,7 +11,7 @@ namespace BillPokemon.Tests.Integration
         [Test, Explicit]
         public void SuccessTest()
         {
-            var service = new ShakespeareFunTranslationService();
+            var service = new ShakespeareFunTranslationService(new HttpClient());
 
             var result = service.GetTranslation("Good morning to you").Result;
 

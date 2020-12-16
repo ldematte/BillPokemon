@@ -10,7 +10,7 @@ namespace BillPokemon.Tests.Integration
         [Test]
         public void FoundTest()
         {
-            var service = new PokeApiNetDescriptionService();
+            var service = new PokeApiNetDescriptionService(new HttpClient());
 
             var descriptions = service.GetDescriptions("pikachu").Result;
 
@@ -21,7 +21,7 @@ namespace BillPokemon.Tests.Integration
         [Test]
         public void NotFoundTest()
         {
-            var service = new PokeApiNetDescriptionService();
+            var service = new PokeApiNetDescriptionService(new HttpClient());
 
             Assert.ThrowsAsync<HttpRequestException>(async () =>
             { 
