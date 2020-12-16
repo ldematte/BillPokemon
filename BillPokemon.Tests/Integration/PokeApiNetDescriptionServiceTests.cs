@@ -1,9 +1,8 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using BillPokemon.PokeApiNet;
 using NUnit.Framework;
 
-namespace BillPokemon.Tests
+namespace BillPokemon.Tests.Integration
 {
     [TestFixture]
     public class PokeApiNetDescriptionServiceTests

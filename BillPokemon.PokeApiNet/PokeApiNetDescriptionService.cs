@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using BillPokemon.Core.Interfaces;
 using PokeApiNet;
@@ -14,6 +15,12 @@ namespace BillPokemon.PokeApiNet
         {
             m_pokeClient = new PokeApiClient();
         }
+
+        public PokeApiNetDescriptionService(HttpMessageHandler messageHandler)
+        {
+            m_pokeClient = new PokeApiClient(messageHandler);
+        }
+
         public async Task<IList<string>> GetDescriptions(string name)
         {
             var species = await m_pokeClient.GetResourceAsync<PokemonSpecies>(name);

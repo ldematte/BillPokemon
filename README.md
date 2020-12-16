@@ -28,6 +28,16 @@ Project for tests. This is a compromise/semplification: I could have done multip
 
 The test bank includes unit tests and integration tests. Integration tests will actually ping the external server APIs for data while the unit tests run off of mocked data.
 
+*** Test are not meant to be complete! ***
+- They do not provide complete coverage
+- They do not cover every possible scenario
+- Different tests with different techniques overlap
+ 
+ This is intentional, and it is done in order to:
+ - keep having fun: fun is in the scope of this project, being bored writing repetitive unit tests it is not :)
+ - demonstrate different techniques: integration with real services, mocking of the real services, mocking of the services responses.
+
+
 ### BillPokemon.PokeApiNet
 
 For the sake of the example (to show how things could be done in different ways), I decided to implement the description services using an existing library. To read Pokemon descriptions, I used the PokeApiNet library.
