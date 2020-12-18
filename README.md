@@ -47,9 +47,9 @@ This project includes the interfaces as well as common utilities that can be sha
 Why just one project? For simplicity. In a more complex scenario, this project could be divided by service type (one project for each service, e.g. BillPokemon.Translation.Core) or by functionality (e.g. BillPokemon.Interfaces + BillPokemon.Common), or both.
 
 ### BillPokemon.Tests
-Project for tests. This is a compromise/semplification: I could have done multiple test project (e.g. BillPokemon.Core.Tests), but in this case it would have been overengineering. I could always refactor and add other projects later if this becomes too big.
+Project for tests. This is a compromise/semplification: I could have done multiple test project (e.g. BillPokemon.Core.Tests), but for such a simple service it would have been overengineering. I can always refactor and add other projects later if this becomes too big.
 
-The test bank includes unit tests and integration tests. Integration tests will actually ping the external server APIs for data while the unit tests run off of mocked data.
+The test bank includes unit tests and integration tests. Integration tests will actually ping the external server APIs for data while the unit tests run off mocked data.
 
 *** Test are not meant to be complete! ***
 - They do not provide complete coverage
@@ -77,16 +77,14 @@ Again as an example, I implemented a very basic, simple, minimal client for the 
 
 ### Implementation choices
 
-Besides the aforementioned choices on tests (showcases on what would I test and how, not to be intended as a full-coverage test suite), I have *not* changed the requirements, even if I would have like to.
+Besides the aforementioned choices on tests (showcases on what would I test and how, not to be intended as a full-coverage test suite), I have *not* changed the requirements.
 
 The specified response format does not include any way to specify if an error occoured in one of the services, so I have three choices:
 1. modify/change/differentiate the response format. This might be a problem/not possible, so I skipped this option
 2. when a service fail, the whole request fail (e.g. if one service gives a 429 or a 400 or a 500, the whole request will return a 500 error)
 3. a service failure is embedded in the answer.
 
-I went for the 2nd. This may be not ideal, or desired, depending on the user expectations: is the response useful even if partial? Would be necessary to include more info on which service is at fault? In those cases, I would  advice to go for the 1st, but that would need to be discussed with the API users because it might be a breaking change for them.
-
-For example, an option is to go with a response with no `description` field but some additional fileds for error description:
+I went for the 2nd. This may be not ideal, or desired, depending on the user expectations: is the response useful even if partial? Would be necessary to include more info on which service is at fault? In those cases, I would  advice to go for the 1st, for example returning a response with no `description` field but some additional fields for error tracking:
 
 ```
 {
@@ -95,6 +93,8 @@ For example, an option is to go with a response with no `description` field but 
   "fault": "Response status code does not indicate success: 429 (Too Many Requests)."
 }
 ```
+But that would need to be discussed with the API users because it might be a breaking change for them.
+
 I structured the code in a way that it is super easy to do either one. This could be a good point for discussion.
 
 ## Running
@@ -122,7 +122,7 @@ There is a Docker file in the BillPokemon project directory (BillPokemon\BillPok
 docker build -t pokemon -f Dockerfile ..
 ```
 
-run the docker container, then use ps to see where port 80 and 443 where mapped to:
+run the docker container, then use `docker ps` to see where port 80 and 443 where mapped to:
 
 ```
 PS BillPokemon\BillPokemon> docker ps
