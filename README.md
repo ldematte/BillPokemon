@@ -99,18 +99,22 @@ I structured the code in a way that it is super easy to do either one. This coul
 
 ## Running
 
-### Without docker
-
 - Download and install the .NET SDK for your platform at https://dotnet.microsoft.com/download
 - clone the repo
 - cd into the project directory (cd BillPokemon)
+
+### Without docker
+
 - at the prompt, write `dotnet run` and press enter
 
-You can now open the browser to https://localhost:49155/swagger/index.html and use Swagger to read the API docs and/or try it out.
+You can now open the browser to https://localhost:5001/swagger/index.html and use Swagger to read the API docs and/or try it out.
+Or you can use any tool like kttp-repl or httpie to query the service directly.
 
 To run tests, cd into the tests directory and run `dotnet test`
 
 ### With docker
+
+- at the prompt, write `dotnet build` and press enter
 
 There is a Docker file in the BillPokemon project directory (BillPokemon\BillPokemon). CD to the project directory and run 
 

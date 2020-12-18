@@ -24,20 +24,19 @@ namespace BillPokemon.Controllers
             m_translationService = translationService;
         }
 
-        private async Task ExecuteAndLog<T>(string serviceName, Func<Task<T>> service, Action<T> response, Action<string> error)
+        private async Task<T> ExecuteAndLog<T>(string serviceName, Func<Task<T>> service)
         {
             m_logger.LogDebug($"Start request to {serviceName}");
             try
             {
                 var result = await service();
                 m_logger.LogDebug($"Finished request to {serviceName}");
-                response(result);
+                return result;
             }
             catch (Exception e)
             {
                 m_logger.LogError(e, $"Request to {serviceName} returned an error");
                 throw;
-                // OR: invoke the error handler, error(e.Message)
             }
         }
 
@@ -52,17 +51,9 @@ namespace BillPokemon.Controllers
         {
             var stopWatch = new Stopwatch();
 
-            var description = string.Empty;
-            await ExecuteAndLog(nameof(m_descriptionService), 
-                () => GetDescription(name),
-                result => description = result,
-                message => description = $"Description error: {message}");
+            var description = await ExecuteAndLog(nameof(m_descriptionService), () => GetDescription(name));
             
-            var translation = string.Empty;
-            await ExecuteAndLog(nameof(m_translationService), 
-                () => m_translationService.GetTranslation(description),
-                response => translation = response,
-                message => translation = $"Translation error: {message}");
+            var translation = await ExecuteAndLog(nameof(m_translationService), () => m_translationService.GetTranslation(description));
 
             m_logger.LogInformation($"PokemonController.Get required {stopWatch.ElapsedMilliseconds}ms");
 
