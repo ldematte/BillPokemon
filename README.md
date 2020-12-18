@@ -60,8 +60,23 @@ Again as an example, I implemented a very basic, simple, minimal client for the 
 - cd into the project directory (cd BillPokemon)
 - at the prompt, write "dotnet run" and press enter
 
+You can now open the browser to https://localhost:49155/swagger/index.html and use Swagger to read the API docs and/or try it out.
+
 ### With docker
 
-TODO
+There is a Docker file in the BillPokemon project directory (BillPokemon\BillPokemon). CD to the project directory and run 
 
-You can now open the browser to https://localhost:5001/swagger/index.html and use Swagger to read the API docs and/or try it out.
+```
+docker build -t pokemon -f Dockerfile ..
+```
+
+run the docker container, then use ps to see where port 80 and 443 where mapped to:
+
+```
+PS BillPokemon\BillPokemon> docker ps
+CONTAINER ID   IMAGE             COMMAND               CREATED         STATUS         PORTS
+              NAMES
+0bc2caa2edfc   billpokemon:dev   "tail -f /dev/null"   3 minutes ago   Up 3 minutes   0.0.0.0:49156->80/tcp, 0.0.0.0:49155->443/tcp   BillPokemon
+```
+
+You can now open the browser to https://localhost:49155/swagger/index.html and use Swagger to read the API docs and/or try it out.
