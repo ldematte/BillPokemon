@@ -45,6 +45,8 @@ This is a good candidate for the following reasons:
 - it is async (re: the non-functional requirement "async everywhere")
 - it uses HttpClient (so we can control behaviour like retries and circuit breakers centrally through IHttpClientFactory)
 
+There was no constructor overload to pass a HttpClient to the library, so I forked the repo and submitted a pull request to the author. The pull request has been merged but not published yet, so for this example I uploaded a forked version of the package on NuGet.org (PokeApi2). Just temporary, will switch to the official package once it is published by the author.
+
 ### BillPokemon.FunTranslations
 
 Again as an example, I implemented a very basic, simple, minimal client for the translation service using HttpClient and Newtonsoft.Json, based on the docs found on the funtranslations site.

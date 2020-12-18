@@ -13,8 +13,7 @@ namespace BillPokemon.PokeApiNet
 
         public PokeApiNetDescriptionService(HttpClient httpClient)
         {
-            // TODO: use the HttpClient instance passed by DI
-            m_pokeClient = new PokeApiClient();
+            m_pokeClient = new PokeApiClient(httpClient);
         }
 
         public PokeApiNetDescriptionService(HttpMessageHandler messageHandler)

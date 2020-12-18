@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PokeApiNet" Version="3.0.0" />
+    <PackageReference Include="PokeApiNet2" Version="3.0.1" />
   </ItemGroup>
 
   <ItemGroup>
