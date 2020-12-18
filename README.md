@@ -14,6 +14,29 @@ Since this project is inteded as a tech demo, it implements the following featur
     - Configurable timeouts and retries
     - Mockable
 
+The choice of the two online services is fun, as one (Funtranslations) is much slower and rate limited.
+
+From the requirements:
+>
+>API Requirements 
+> 
+>Retrieve Shakespearean description: 
+> 
+>GET ​endpoint: ​```/pokemon/<pokemon name>``` 
+> 
+>Usage example (using httpie): 
+> 
+>```http http://localhost:5000/pokemon/charizard```
+> 
+>Output format: 
+>```{ 
+>  "name": "charizard", 
+>  "description": "Charizard flies 'round the sky in search of powerful 
+>opponents. 't breathes fire of such most wondrous heat yond 't melts aught. 
+>However, 't nev'r turns its fiery breath on any opponent weaker than itself." 
+>}
+>```
+
 
 ## Design, project structure, implementation choices
 
@@ -38,6 +61,7 @@ The test bank includes unit tests and integration tests. Integration tests will 
  - demonstrate different techniques: integration with real services, mocking of the real services, mocking of the services responses.
 
 
+
 ### BillPokemon.PokeApiNet
 
 For the sake of the example (to show how things could be done in different ways), I decided to implement the description services using an existing library. To read Pokemon descriptions, I used the PokeApiNet library.
@@ -51,6 +75,28 @@ There was no constructor overload to pass a HttpClient to the library, so I fork
 
 Again as an example, I implemented a very basic, simple, minimal client for the translation service using HttpClient and Newtonsoft.Json, based on the docs found on the funtranslations site.
 
+### Implementation choices
+
+Besides the aforementioned choices on tests (showcases on what would I test and how, not to be intended as a full-coverage test suite), I have *not* changed the requirements, even if I would have like to.
+
+The specified response format does not include any way to specify if an error occoured in one of the services, so I have three choices:
+1. modify/change/differentiate the response format. This might be a problem/not possible, so I skipped this option
+2. when a service fail, the whole request fail (e.g. if one service gives a 429 or a 400 or a 500, the whole request will return a 500 error)
+3. a service failure is embedded in the answer.
+
+I went for the 2nd. This may be not ideal, or desired, depending on the user expectations: is the response useful even if partial? Would be necessary to include more info on which service is at fault? In those cases, I would  advice to go for the 1st, but that would need to be discussed with the API users because it might be a breaking change for them.
+
+For example, an option is to go with a response with no `description` field but some additional fileds for error description:
+
+```
+{
+  "name": "mew",
+  "faulting-service": "Translation",
+  "fault": "Response status code does not indicate success: 429 (Too Many Requests)."
+}
+```
+I structured the code in a way that it is super easy to do either one. This could be a good point for discussion.
+
 ## Running
 
 ### Without docker
@@ -58,9 +104,11 @@ Again as an example, I implemented a very basic, simple, minimal client for the 
 - Download and install the .NET SDK for your platform at https://dotnet.microsoft.com/download
 - clone the repo
 - cd into the project directory (cd BillPokemon)
-- at the prompt, write "dotnet run" and press enter
+- at the prompt, write `dotnet run` and press enter
 
 You can now open the browser to https://localhost:49155/swagger/index.html and use Swagger to read the API docs and/or try it out.
+
+To run tests, cd into the tests directory and run `dotnet test`
 
 ### With docker
 
