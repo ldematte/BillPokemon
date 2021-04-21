@@ -1,4 +1,4 @@
-# BillPokemon: Pokemons in the vitorian era
+# BillPokemon: Pokemons in the victorian era
 
 The project provides a REST API implemented using ASP.NET Core.
 It has Swagger for automatic documentation and ease client implementation.
